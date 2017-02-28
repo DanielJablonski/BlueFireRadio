@@ -1,4 +1,4 @@
-package com.example.musicstreamingappgroupproject;
+package com.example.bluefireradio;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +8,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btn;
+    Button btn, music;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +22,20 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
+
+        music = (Button) findViewById(R.id.music);
+        music.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Music.class);
+                startActivity(intent);
+            }
+        });
+
+
 
     }
 }

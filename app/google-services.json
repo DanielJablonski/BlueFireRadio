@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "563269054447",
-    "firebase_url": "https://music-streaming-app.firebaseio.com",
-    "project_id": "music-streaming-app",
-    "storage_bucket": "music-streaming-app.appspot.com"
+    "project_number": "772300641741",
+    "firebase_url": "https://bluefire-radio.firebaseio.com",
+    "project_id": "bluefire-radio",
+    "storage_bucket": "bluefire-radio.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:563269054447:android:1619cd98c0216795",
+        "mobilesdk_app_id": "1:772300641741:android:fb713fdac947e1aa",
         "android_client_info": {
-          "package_name": "com.example.musicstreamingappgroupproject"
+          "package_name": "com.example.bluefireradio"
         }
       },
       "oauth_client": [
         {
-          "client_id": "563269054447-h70jmhr963kp0gh2jb6ehamqht1hfap2.apps.googleusercontent.com",
+          "client_id": "772300641741-7ecvkvjolr3srpbfvnvjlfa5j7a0ooqe.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDYxOd-oXnR1tttJmmlRRpt8ifh0hJ5fzs"
+          "current_key": "AIzaSyCD5Lyz4pQIdmBg1Tu9T3daN0S967U7exg"
         }
       ],
       "services": {

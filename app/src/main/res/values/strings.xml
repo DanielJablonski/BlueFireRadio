@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Music Streaming App Group Project</string>
+    <string name="app_name">BlueFire Radio</string>
+    <string name="server_client_id">772300641741-7ecvkvjolr3srpbfvnvjlfa5j7a0ooqe</string>
 </resources>

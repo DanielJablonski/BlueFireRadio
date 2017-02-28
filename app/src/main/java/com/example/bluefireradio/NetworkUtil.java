@@ -1,4 +1,4 @@
-package com.example.musicstreamingappgroupproject;
+package com.example.bluefireradio;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

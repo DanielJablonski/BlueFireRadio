@@ -1,4 +1,4 @@
-package com.example.musicstreamingappgroupproject;
+package com.example.bluefireradio;
 
 import org.junit.Test;
 
