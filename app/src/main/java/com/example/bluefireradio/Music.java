@@ -31,7 +31,7 @@ public class Music extends AppCompatActivity {
     private void fetchAudioUrlFromFirebase() {
         final FirebaseStorage storage = FirebaseStorage.getInstance();
 // Create a storage reference from our app
-        StorageReference storageRef = storage.getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/music-streaming-app.appspot.com/o/Ed%20Sheeran%20-%20Shape%20Of%20You%20%5BOfficial%20Lyric%20Video%5D.mp3?alt=media&token=9b04de92-69b9-4b3b-a0c1-0741a46f76ee");
+        StorageReference storageRef = storage.getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/bluefire-radio.appspot.com/o/Ed%20Sheeran%20-%20Shape%20Of%20You%20%5BOfficial%20Lyric%20Video%5D.mp3?alt=media&token=9c3ce41b-b73f-4dff-adca-2dba4d0062bb");
         storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
