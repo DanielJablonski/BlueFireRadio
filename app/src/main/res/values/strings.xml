@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">BlueFire Radio</string>
     <string name="server_client_id">772300641741-7ecvkvjolr3srpbfvnvjlfa5j7a0ooqe</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
