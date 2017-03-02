@@ -41,10 +41,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private static final String TAG = "FacebookLogin";
-    private CallbackManager mCallbackManager;
     private static final int RC_SIGN_IN = 9001;
     private GoogleApiClient googleApiClient;
-    private Button googleBtn, facebookBtn;
+    private Button googleBtn;
     private TextView name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,23 +78,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-
-        // Initialize Facebook Login button
-
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                }
-                // ...
-            }
-        };
     }
 
     private void signInWithGoogle() {
@@ -186,38 +168,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 System.out.println("Google Auth Failed Tho: " + result.getStatus().toString());
                 alertWithMessage("Google Sign-In Failed");
             }
-        } else {
-            mCallbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
 
-    // Facebook Auth Helpers
 
-    private void signInWithFacebook() {
-        if (NetworkUtil.isConnectedToInternet(this)) {
-            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile"));
-        } else {
-            DialogInterface.OnClickListener tryAgainListener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.cancel();
-                    signInWithFacebook();
-                }
-            };
-            DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.cancel();
-                    finish();
-                }
-            };
-        }
-    }
     private String getStringFromProvider(String provider) {
+        String google = "";
         if (provider.equals("google.com")) {
-            return "Google";
+            google =  "Google";
         }
-        return "Facebook";
+        return google;
     }
 
     private void alertWithMessage(String messageString) {
