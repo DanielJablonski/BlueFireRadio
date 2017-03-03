@@ -11,11 +11,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Button btn, music;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +37,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View headerView = navigationView.getHeaderView(0);
+
         btn = (Button) findViewById(R.id.button);
+
+        TextView displayName = (TextView) headerView.findViewById(R.id.displayName);
+        TextView email = (TextView) headerView.findViewById(R.id.email);
+
+        if(FirebaseAuth.getInstance().getCurrentUser() != null)
+        {
+            user = FirebaseAuth.getInstance().getCurrentUser();
+            displayName.setText(user.getDisplayName());
+            email.setText(user.getEmail());
+        }
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
