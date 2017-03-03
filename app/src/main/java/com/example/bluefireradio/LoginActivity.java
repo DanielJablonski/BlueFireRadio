@@ -13,8 +13,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.CallbackManager;
-import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -31,8 +29,6 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -40,7 +36,7 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private static final String TAG = "FacebookLogin";
+    private static final String TAG = "LOGIN";
     private static final int RC_SIGN_IN = 9001;
     private GoogleApiClient googleApiClient;
     private Button googleBtn;
@@ -65,7 +61,19 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
 
-
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+                        @Override
+                        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                                FirebaseUser user = firebaseAuth.getCurrentUser();
+                                if (user != null) {
+                                       // User is signed in
+                                                Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                                    } else {
+                                        // User is signed out
+                                                Log.d(TAG, "onAuthStateChanged:signed_out");
+                                    }
+                                    }
+                   };
 
         mAuth = FirebaseAuth.getInstance();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
