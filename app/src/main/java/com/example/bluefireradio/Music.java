@@ -11,21 +11,26 @@ import android.util.Log;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
+import java.util.Random;
 
 public class Music extends AppCompatActivity {
 
     private MediaPlayer mMediaplayer;
+    private Random random;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_main);
+        setContentView(R.layout.activity_music);
         mMediaplayer = new MediaPlayer();
         mMediaplayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         fetchAudioUrlFromFirebase();
@@ -34,30 +39,50 @@ public class Music extends AppCompatActivity {
     private void fetchAudioUrlFromFirebase() {
         final FirebaseStorage storage = FirebaseStorage.getInstance();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("music");
-// Create a storage reference from our app
-        StorageReference storageRef = storage.getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/bluefire-radio.appspot.com/o/Ed%20Sheeran%20-%20Shape%20Of%20You%20%5BOfficial%20Lyric%20Video%5D.mp3?alt=media&token=9c3ce41b-b73f-4dff-adca-2dba4d0062bb");
-        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onSuccess(Uri uri) {
-                try {
-                    // Download url of file
-                    final String url = uri.toString();
-                    mMediaplayer.setDataSource(url);
-                    // wait for media player to get prepare
-                    mMediaplayer.prepare();
-                    mMediaplayer.start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                StorageReference storageRef = storage.getReferenceFromUrl(dataSnapshot.child(String.valueOf(randomInt(0,1))).getValue().toString());
+                storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        try {
+                            // Download url of file
+                            final String url = uri.toString();
+                            mMediaplayer.setDataSource(url);
+                            // wait for media player to get prepare
+                            mMediaplayer.prepare();
+                            mMediaplayer.start();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.i("TAG", e.getMessage());
+                            }
+                        });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
             }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.i("TAG", e.getMessage());
-                    }
-                });
+        });
+// Create a storage reference from our app
 
+
+    }
+
+    public static int randomInt(int min, int max) {
+        Random rand = new Random();
+
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+
+        return randomNum;
     }
 }
