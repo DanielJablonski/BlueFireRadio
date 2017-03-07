@@ -1,6 +1,8 @@
 package com.example.bluefireradio;
 
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +18,8 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -41,7 +45,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         btn = (Button) findViewById(R.id.button);
 
+        AssetManager am = MainActivity.this.getApplicationContext().getAssets();
         TextView displayName = (TextView) headerView.findViewById(R.id.displayName);
+        Typeface typeface = Typeface.createFromAsset(am,
+                String.format(Locale.US, "fonts/%s", "timeburnerbold.ttf"));
+        displayName.setTypeface(typeface);
         TextView email = (TextView) headerView.findViewById(R.id.email);
 
         if(FirebaseAuth.getInstance().getCurrentUser() != null)
