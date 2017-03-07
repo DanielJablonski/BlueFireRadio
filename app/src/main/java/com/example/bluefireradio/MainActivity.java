@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -46,15 +47,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         btn = (Button) findViewById(R.id.button);
 
         AssetManager am = MainActivity.this.getApplicationContext().getAssets();
-        TextView displayName = (TextView) headerView.findViewById(R.id.displayName);
-        Typeface typeface = Typeface.createFromAsset(am,
-                String.format(Locale.US, "fonts/%s", "timeburnerbold.ttf"));
-        displayName.setTypeface(typeface);
+        TextView appName = (TextView) headerView.findViewById(R.id.app_name);
+        Typeface typeface = Typeface.createFromAsset(am, String.format(Locale.US, "fonts/%s", "timeburnerbold.ttf"));
+        appName.setTypeface(typeface);
+        TextView displayName = (TextView) headerView.findViewById(R.id.display_name);
         TextView email = (TextView) headerView.findViewById(R.id.email);
 
         if(FirebaseAuth.getInstance().getCurrentUser() != null)
         {
             user = FirebaseAuth.getInstance().getCurrentUser();
+            displayName.setVisibility(View.VISIBLE);
+            email.setVisibility(View.VISIBLE);
+
+
             displayName.setText(user.getDisplayName());
             email.setText(user.getEmail());
         }
@@ -83,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
