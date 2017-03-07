@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "772300641741-qvpunbcoh80de5g5bp2p00fv95fgjgas.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bluefireradio",
+            "certificate_hash": "d6b9246a515d254572c12ba1cf1f45f0951991f2"
+          }
+        },
+        {
           "client_id": "772300641741-7ecvkvjolr3srpbfvnvjlfa5j7a0ooqe.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -22,6 +30,9 @@
       "api_key": [
         {
           "current_key": "AIzaSyCD5Lyz4pQIdmBg1Tu9T3daN0S967U7exg"
+        },
+        {
+          "current_key": "AIzaSyDvKJtTTBjnXqN5B876k_-iNMBVgBOdkOw"
         }
       ],
       "services": {
@@ -29,8 +40,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "772300641741-7ecvkvjolr3srpbfvnvjlfa5j7a0ooqe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

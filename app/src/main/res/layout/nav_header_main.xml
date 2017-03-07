@@ -25,6 +25,8 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="BlueFire Radio"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:id="@+id/displayName"/>
 
