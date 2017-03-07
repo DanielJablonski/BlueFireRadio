@@ -60,14 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        music = (Button) findViewById(R.id.music);
-        music.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Music.class);
-                startActivity(intent);
-            }
-        });
+
     }
 
     @Override
@@ -88,12 +81,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch(id) {
             case R.id.nav_browse_music:
+                Intent music = new Intent(MainActivity.this, Music.class);
+                startActivity(music);
+                finish();
                 Toast.makeText(this, "You selected music", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_playlists:
                 Toast.makeText(this, "You selected playlists", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_settings:
+                Intent settings = new Intent(MainActivity.this, Settings.class);
+                startActivity(settings);
+                finish();
                 Toast.makeText(this, "You selected settings", Toast.LENGTH_SHORT).show();
                 break;
         }
