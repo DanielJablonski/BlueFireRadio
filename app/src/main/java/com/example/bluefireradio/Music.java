@@ -8,6 +8,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.SeekBar;
+import android.widget.ToggleButton;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,6 +28,12 @@ import java.util.Random;
 
 public class Music extends AppCompatActivity {
 
+    Button myButton;
+    SeekBar seekBar;
+    AudioManager myAudioManager;
+    ToggleButton myToggleButton;
+
+
     private MediaPlayer mMediaplayer;
     private Random random;
 
@@ -34,6 +44,44 @@ public class Music extends AppCompatActivity {
         mMediaplayer = new MediaPlayer();
         mMediaplayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         fetchAudioUrlFromFirebase();
+
+        seekBar=(SeekBar)findViewById(R.id.seekbar1);
+        myToggleButton=(ToggleButton) findViewById(R.id.toggleButton);
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                myAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
+
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        myToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    mMediaplayer.start();
+                } else {
+                    mMediaplayer.pause();
+
+
+                }
+            }
+        });
+
     }
 
     private void fetchAudioUrlFromFirebase() {
