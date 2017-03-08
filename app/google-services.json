@@ -15,7 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "772300641741-qvpunbcoh80de5g5bp2p00fv95fgjgas.apps.googleusercontent.com",
+          "client_id": "772300641741-qvpunbcoh80de5g5bp2p00fv95fgjgas",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.bluefireradio",
