@@ -3,12 +3,14 @@ package com.example.bluefireradio;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.ToggleButton;
@@ -26,27 +28,37 @@ import com.google.firebase.storage.StorageReference;
 import java.io.IOException;
 import java.util.Random;
 
-public class Music extends AppCompatActivity {
+public class MusicFragment extends Fragment {
 
-    Button myButton;
     SeekBar seekBar;
     AudioManager myAudioManager;
     ToggleButton myToggleButton;
 
 
     private MediaPlayer mMediaplayer;
-    private Random random;
 
+    public MusicFragment() {}
+
+    public static MusicFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        MusicFragment fragment = new MusicFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_music);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_music, container, false);
+
         mMediaplayer = new MediaPlayer();
         mMediaplayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         fetchAudioUrlFromFirebase();
 
-        seekBar=(SeekBar)findViewById(R.id.seekbar1);
-        myToggleButton=(ToggleButton) findViewById(R.id.toggleButton);
+        seekBar=(SeekBar) v.findViewById(R.id.seekbar1);
+        myToggleButton=(ToggleButton) v.findViewById(R.id.toggleButton);
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -82,6 +94,7 @@ public class Music extends AppCompatActivity {
             }
         });
 
+        return v;
     }
 
     private void fetchAudioUrlFromFirebase() {
