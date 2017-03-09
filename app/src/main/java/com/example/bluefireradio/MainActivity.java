@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     FirebaseUser user;
 
+    FragmentTransaction fragmentTransaction;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,12 +88,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch(id) {
             case R.id.nav_browse_music:
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container, MusicFragment.newInstance());
                 fragmentTransaction.commit();
                 break;
             case R.id.nav_playlists:
-                Toast.makeText(this, "You selected playlists", Toast.LENGTH_SHORT).show();
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.container, PlaylistFragment.newInstance());
+                fragmentTransaction.commit();
                 break;
             case R.id.nav_settings:
                 Intent settings = new Intent(MainActivity.this, Settings.class);
