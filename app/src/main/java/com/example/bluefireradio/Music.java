@@ -35,7 +35,6 @@ public class Music extends AppCompatActivity {
 
 
     private MediaPlayer mMediaplayer;
-    private Random random;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

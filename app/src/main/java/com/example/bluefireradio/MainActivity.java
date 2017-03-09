@@ -58,21 +58,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             user = FirebaseAuth.getInstance().getCurrentUser();
             displayName.setVisibility(View.VISIBLE);
             email.setVisibility(View.VISIBLE);
+            appName.setVisibility(View.GONE);
 
 
             displayName.setText(user.getDisplayName());
             email.setText(user.getEmail());
+            btn.setVisibility(View.GONE);
         }
-
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
+        else
+        {
+            btn.setVisibility(View.VISIBLE);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        }
 
     }
 

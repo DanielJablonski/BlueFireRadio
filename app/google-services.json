@@ -23,7 +23,7 @@
           }
         },
         {
-          "client_id": "772300641741-7ecvkvjolr3srpbfvnvjlfa5j7a0ooqe.apps.googleusercontent.com",
+          "client_id": "772300641741-7ecvkvjolr3srpbfvnvjlfa5j7a0ooqe",
           "client_type": 3
         }
       ],
@@ -43,7 +43,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "772300641741-7ecvkvjolr3srpbfvnvjlfa5j7a0ooqe.apps.googleusercontent.com",
+              "client_id": "772300641741-7ecvkvjolr3srpbfvnvjlfa5j7a0ooqe",
               "client_type": 3
             }
           ]
