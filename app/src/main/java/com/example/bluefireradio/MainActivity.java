@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,7 +25,6 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    Button btn, music;
     FirebaseUser user;
 
     @Override
@@ -44,8 +44,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         View headerView = navigationView.getHeaderView(0);
 
-        btn = (Button) findViewById(R.id.button);
-
         AssetManager am = MainActivity.this.getApplicationContext().getAssets();
         TextView appName = (TextView) headerView.findViewById(R.id.app_name);
         Typeface typeface = Typeface.createFromAsset(am, String.format(Locale.US, "fonts/%s", "timeburnerbold.ttf"));
@@ -58,26 +56,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             user = FirebaseAuth.getInstance().getCurrentUser();
             displayName.setVisibility(View.VISIBLE);
             email.setVisibility(View.VISIBLE);
-            appName.setVisibility(View.GONE);
-
 
             displayName.setText(user.getDisplayName());
             email.setText(user.getEmail());
-            btn.setVisibility(View.GONE);
         }
-        else
-        {
-            btn.setVisibility(View.VISIBLE);
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            });
-        }
-
     }
 
     @Override
@@ -97,11 +79,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         switch(id) {
+            case R.id.button_login:
+                startActivity(new Intent(this, LoginActivity.class));
+                break;
             case R.id.nav_browse_music:
-                Intent music = new Intent(MainActivity.this, Music.class);
-                startActivity(music);
-                finish();
-                Toast.makeText(this, "You selected music", Toast.LENGTH_SHORT).show();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.container, MusicFragment.newInstance());
+                fragmentTransaction.commit();
                 break;
             case R.id.nav_playlists:
                 Toast.makeText(this, "You selected playlists", Toast.LENGTH_SHORT).show();
