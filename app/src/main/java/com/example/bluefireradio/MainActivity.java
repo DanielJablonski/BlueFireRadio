@@ -60,6 +60,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             displayName.setText(user.getDisplayName());
             email.setText(user.getEmail());
         }
+        else
+        {
+            Intent login = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(login);
+            finish();
+        }
     }
 
     @Override
@@ -79,9 +85,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         switch(id) {
-            case R.id.button_login:
-                startActivity(new Intent(this, LoginActivity.class));
-                break;
             case R.id.nav_browse_music:
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container, MusicFragment.newInstance());
