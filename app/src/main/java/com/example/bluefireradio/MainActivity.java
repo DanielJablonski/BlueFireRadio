@@ -14,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,12 +61,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             displayName.setText(user.getDisplayName());
             email.setText(user.getEmail());
         }
-        else
-        {
-            Intent login = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(login);
-            finish();
-        }
+//        else
+//        {
+//            Intent login = new Intent(MainActivity.this, LoginActivity.class);
+//            startActivity(login);
+//            finish();
+//        }
     }
 
     @Override
@@ -87,7 +86,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         switch(id) {
-            case R.id.nav_browse_music:
+            case R.id.nav_log_out:
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                break;
+            case R.id.nav_browse_songs:
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container, MusicFragment.newInstance());
                 fragmentTransaction.commit();
@@ -98,9 +101,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragmentTransaction.commit();
                 break;
             case R.id.nav_settings:
-                Intent settings = new Intent(MainActivity.this, Settings.class);
-                startActivity(settings);
-                finish();
                 Toast.makeText(this, "You selected settings", Toast.LENGTH_SHORT).show();
                 break;
         }
