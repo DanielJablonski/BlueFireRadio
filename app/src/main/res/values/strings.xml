@@ -8,6 +8,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="string_home">Home</string>
     <string name="string_browse_songs">Browse Songs</string>
     <string name="string_your_playlists">Your Playlists</string>
     <string name="string_settings">Settings</string>

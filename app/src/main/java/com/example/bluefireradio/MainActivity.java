@@ -90,10 +90,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         switch(id) {
-            case R.id.nav_log_out:
-                FirebaseAuth.getInstance().signOut();
-                finish();
-                break;
+            case R.id.nav_home:
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.container, HomeFragment.newInstance());
+                fragmentTransaction.commit();
             case R.id.nav_browse_songs:
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container, MusicFragment.newInstance());
@@ -106,6 +106,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_settings:
                 Toast.makeText(this, "You selected settings", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_log_out:
+                FirebaseAuth.getInstance().signOut();
+                finish();
                 break;
         }
 
