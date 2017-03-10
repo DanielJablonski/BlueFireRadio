@@ -56,17 +56,13 @@ public class MusicFragment extends Fragment {
         mMediaplayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         fetchAudioUrlFromFirebase();
 
-        seekBar=(SeekBar) v.findViewById(R.id.seekbar1);
+        seekBar=(SeekBar) v.findViewById(R.id.musicProgressBar);
         myToggleButton=(ToggleButton) v.findViewById(R.id.toggleButton);
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-                myAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
-
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                mMediaplayer.seekTo(i);
 
             }
 
@@ -80,18 +76,7 @@ public class MusicFragment extends Fragment {
 
             }
         });
-        myToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    mMediaplayer.start();
-                } else {
-                    mMediaplayer.pause();
 
-
-                }
-            }
-        });
 
         return v;
     }
