@@ -67,6 +67,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            startActivity(login);
 //            finish();
 //        }
+
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.container, HomeFragment.newInstance());
+        fragmentTransaction.commit();
     }
 
     @Override
