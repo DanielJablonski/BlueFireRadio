@@ -61,12 +61,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             displayName.setText(user.getDisplayName());
             email.setText(user.getEmail());
         }
-//        else
-//        {
-//            Intent login = new Intent(MainActivity.this, LoginActivity.class);
-//            startActivity(login);
-//            finish();
-//        }
+        else
+        {
+            Intent login = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(login);
+            finish();
+        }
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.container, HomeFragment.newInstance());
