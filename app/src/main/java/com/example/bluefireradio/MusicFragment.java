@@ -34,7 +34,6 @@ public class MusicFragment extends Fragment {
     AudioManager myAudioManager;
     ToggleButton myToggleButton;
 
-
     private MediaPlayer mMediaplayer;
 
     public MusicFragment() {}

@@ -3,16 +3,23 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_browse_music"
+            android:id="@+id/nav_browse_songs"
             android:icon="@drawable/ic_music_note"
-            android:title="Browse Songs" />
+            android:title="@string/string_browse_songs" />
         <item
             android:id="@+id/nav_playlists"
             android:icon="@drawable/ic_playlists"
-            android:title="Saved Playlists" />
+            android:title="@string/string_your_playlists" />
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings"
-            android:title="Settings" />
+            android:title="@string/string_settings" />
+    </group>
+
+    <!--An id is necessary so that a separator will appear between the groups-->
+    <group android:id="@+id/group_nav_log_out">
+        <item
+            android:id="@+id/nav_log_out"
+            android:title="Log out" />
     </group>
 </menu>
