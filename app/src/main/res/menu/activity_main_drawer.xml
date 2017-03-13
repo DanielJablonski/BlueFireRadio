@@ -14,16 +14,17 @@
             android:id="@+id/nav_playlists"
             android:icon="@drawable/ic_playlists"
             android:title="@string/string_your_playlists" />
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_settings"
-            android:title="@string/string_settings" />
     </group>
 
     <!--An id is necessary so that a separator will appear between the groups-->
     <group android:id="@+id/group_nav_log_out">
         <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/string_settings" />
+        <item
             android:id="@+id/nav_log_out"
-            android:title="Log out" />
+            android:icon="@drawable/logout"
+            android:title="@string/string_log_out" />
     </group>
 </menu>
