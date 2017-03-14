@@ -26,14 +26,7 @@
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true" />
 
-    <ToggleButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New ToggleButton"
-        android:id="@+id/toggleButton"
-        android:layout_marginTop="115dp"
-        android:layout_centerHorizontal="true"
-        android:checked="false" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
