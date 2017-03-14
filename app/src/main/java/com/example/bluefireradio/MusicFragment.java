@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -34,6 +35,7 @@ public class MusicFragment extends Fragment {
     SeekBar myseekBar;
     AudioManager myAudioManager;
     ToggleButton myToggleButton;
+    TextView songArtist, songName;
 
     private MediaPlayer mMediaplayer;
 
@@ -58,8 +60,11 @@ public class MusicFragment extends Fragment {
         fetchAudioUrlFromFirebase();
 
         seekBar=(SeekBar) v.findViewById(R.id.musicProgressBar);
-        myseekBar=(SeekBar) v.findViewById(R.id.seekbar1);
-        myToggleButton=(ToggleButton) v.findViewById(R.id.toggleButton);
+
+        songName = (TextView) v.findViewById(R.id.songName);
+        songArtist = (TextView) v.findViewById(R.id.songArtist);
+
+
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -79,27 +84,7 @@ public class MusicFragment extends Fragment {
             }
         });
 
-        myseekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-                myAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
-
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
 
 
         return v;
@@ -112,7 +97,10 @@ public class MusicFragment extends Fragment {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                StorageReference storageRef = storage.getReferenceFromUrl(dataSnapshot.child(String.valueOf(randomInt(0,1))).getValue().toString());
+                DataSnapshot snapshot =dataSnapshot.child(String.valueOf(randomInt(0,9)));
+                StorageReference storageRef = storage.getReferenceFromUrl(snapshot.child("url").getValue().toString());
+                songName.setText(snapshot.child("name").getValue().toString());
+                songArtist.setText(snapshot.child("artist").getValue().toString());
                 storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
@@ -122,7 +110,6 @@ public class MusicFragment extends Fragment {
                             mMediaplayer.setDataSource(url);
                             // wait for media player to get prepare
                             mMediaplayer.prepare();
-                            mMediaplayer.start();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
