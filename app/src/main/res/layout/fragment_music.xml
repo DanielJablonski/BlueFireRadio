@@ -18,6 +18,14 @@
         android:layout_marginTop="56dp"
         android:layout_below="@+id/toggleButton"
         android:layout_alignParentStart="true" />
+
+    <SeekBar
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekbar1"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
     <ToggleButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,7 +37,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="bluefire radio"
+        android:text="Listen Here"
         android:textSize="50sp"
         android:id="@+id/name"
         android:textColor="#141414"

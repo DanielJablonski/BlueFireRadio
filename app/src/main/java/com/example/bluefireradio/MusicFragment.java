@@ -31,6 +31,7 @@ import java.util.Random;
 public class MusicFragment extends Fragment {
 
     SeekBar seekBar;
+    SeekBar myseekBar;
     AudioManager myAudioManager;
     ToggleButton myToggleButton;
 
@@ -57,12 +58,35 @@ public class MusicFragment extends Fragment {
         fetchAudioUrlFromFirebase();
 
         seekBar=(SeekBar) v.findViewById(R.id.musicProgressBar);
+        myseekBar=(SeekBar) v.findViewById(R.id.seekbar1);
         myToggleButton=(ToggleButton) v.findViewById(R.id.toggleButton);
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 mMediaplayer.seekTo(i);
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        myseekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                myAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
+
 
             }
 
