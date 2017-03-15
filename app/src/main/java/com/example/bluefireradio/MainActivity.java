@@ -68,9 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             finish();
         }
 
-        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container, HomeFragment.newInstance());
-        fragmentTransaction.commit();
+        onNavigationItemSelected(navigationView.getMenu().getItem(0));
     }
 
     @Override
@@ -89,20 +87,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
         switch(id) {
             case R.id.nav_home:
-                fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container, HomeFragment.newInstance());
-                fragmentTransaction.commit();
             case R.id.nav_browse_songs:
-                fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container, MusicFragment.newInstance());
-                fragmentTransaction.commit();
                 break;
             case R.id.nav_playlists:
-                fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container, PlaylistFragment.newInstance());
-                fragmentTransaction.commit();
                 break;
             case R.id.nav_settings:
                 Toast.makeText(this, "You selected settings", Toast.LENGTH_SHORT).show();
@@ -112,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 finish();
                 break;
         }
+
+        fragmentTransaction.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
