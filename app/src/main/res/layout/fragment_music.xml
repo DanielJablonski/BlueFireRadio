@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_music"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -12,40 +12,65 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.bluefireradio.MusicFragment">
 
-    <SeekBar
-        android:layout_width="fill_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/musicProgressBar"
-        android:layout_marginTop="78dp"
-        android:layout_below="@+id/name"
-        android:layout_alignParentStart="true" />
-
-    <SeekBar
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/seekbar1"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
-
+        android:text=""
+        android:textSize="30sp"
+        android:id="@+id/songName"
+        android:textColor="#ffffff"
+        android:layout_marginTop="17dp"
+        android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Listen Here"
-        android:textSize="50sp"
-        android:id="@+id/name"
-        android:textColor="#141414"
+        android:text=""
+        android:textSize="20sp"
+        android:id="@+id/songArtist"
+        android:textColor="#ffffff"
         android:layout_marginTop="17dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_gravity="center_horizontal"/>
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
+    <SeekBar
+        android:id="@+id/musicProgressBar"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/seekbar1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="65dp"
-        app:srcCompat="@drawable/buttonshape" />
+        android:layout_marginTop="56dp" />
 
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="49dp"
+            android:layout_height="68dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_fast_rewind_black_24dp" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="58dp"
+            android:layout_height="76dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_play_arrow_black_24dp" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="62dp"
+            android:layout_height="70dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_pause_black_24dp" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="79dp"
+            android:layout_height="77dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_fast_forward_black_24dp" />
+    </LinearLayout>
+
+</LinearLayout>
+

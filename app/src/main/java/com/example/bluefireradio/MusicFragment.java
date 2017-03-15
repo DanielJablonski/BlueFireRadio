@@ -3,6 +3,7 @@ package com.example.bluefireradio;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -36,6 +39,10 @@ public class MusicFragment extends Fragment {
     AudioManager myAudioManager;
     ToggleButton myToggleButton;
     TextView songArtist, songName;
+    ImageView play;
+    ImageView pause;
+    ImageView ffw;
+    ImageView rwd;
 
     private MediaPlayer mMediaplayer;
 
@@ -64,6 +71,11 @@ public class MusicFragment extends Fragment {
         songName = (TextView) v.findViewById(R.id.songName);
         songArtist = (TextView) v.findViewById(R.id.songArtist);
 
+        play=(ImageView) v.findViewById(R.id.imageView1);
+        pause=(ImageView) v.findViewById(R.id.imageView2);
+        ffw=(ImageView) v.findViewById(R.id.imageView3);
+        rwd=(ImageView) v.findViewById(R.id.imageView4);
+
 
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -83,6 +95,36 @@ public class MusicFragment extends Fragment {
 
             }
         });
+
+
+        play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        pause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        ffw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        rwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
 
 
 
