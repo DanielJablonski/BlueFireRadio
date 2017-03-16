@@ -35,14 +35,12 @@ import java.util.Random;
 public class MusicFragment extends Fragment {
 
     SeekBar seekBar;
-    SeekBar myseekBar;
-    AudioManager myAudioManager;
-    ToggleButton myToggleButton;
     TextView songArtist, songName;
     ImageView play;
     ImageView pause;
-    ImageView ffw;
-    ImageView rwd;
+
+
+
 
     private MediaPlayer mMediaplayer;
 
@@ -66,15 +64,13 @@ public class MusicFragment extends Fragment {
         mMediaplayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         fetchAudioUrlFromFirebase();
 
-        seekBar=(SeekBar) v.findViewById(R.id.musicProgressBar);
+        seekBar = (SeekBar) v.findViewById(R.id.musicProgressBar);
 
         songName = (TextView) v.findViewById(R.id.songName);
         songArtist = (TextView) v.findViewById(R.id.songArtist);
 
-        play=(ImageView) v.findViewById(R.id.imageView1);
-        pause=(ImageView) v.findViewById(R.id.imageView2);
-        ffw=(ImageView) v.findViewById(R.id.imageView3);
-        rwd=(ImageView) v.findViewById(R.id.imageView4);
+        play = (ImageView) v.findViewById(R.id.imageView1);
+        pause = (ImageView) v.findViewById(R.id.imageView2);
 
 
 
@@ -100,6 +96,7 @@ public class MusicFragment extends Fragment {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMediaplayer.start();
 
             }
         });
@@ -107,30 +104,25 @@ public class MusicFragment extends Fragment {
         pause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMediaplayer.pause();
 
             }
         });
 
-        ffw.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        rwd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-
-
+        if(mMediaplayer.isPlaying()){
+            mMediaplayer.pause();
+        }else{
+            mMediaplayer.start();
+        }
 
 
         return v;
     }
+
+
+
+
+
 
     private void fetchAudioUrlFromFirebase() {
         final FirebaseStorage storage = FirebaseStorage.getInstance();
