@@ -144,6 +144,7 @@ public class MusicFragment extends Fragment {
                             mMediaplayer.setDataSource(url);
                             // wait for media player to get prepare
                             mMediaplayer.prepare();
+                            mMediaplayer.start();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
