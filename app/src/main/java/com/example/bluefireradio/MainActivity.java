@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch(id) {
             case R.id.nav_home:
                 fragmentTransaction.replace(R.id.container, HomeFragment.newInstance());
+                break;
             case R.id.nav_browse_songs:
                 fragmentTransaction.replace(R.id.container, MusicFragment.newInstance());
                 break;
