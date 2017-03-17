@@ -38,6 +38,8 @@ public class MusicFragment extends Fragment {
     TextView songArtist, songName;
     ImageView play;
     ImageView pause;
+    ImageView skipForward;
+    ImageView skipBackward;
 
 
 
@@ -71,6 +73,8 @@ public class MusicFragment extends Fragment {
 
         play = (ImageView) v.findViewById(R.id.imageView1);
         pause = (ImageView) v.findViewById(R.id.imageView2);
+        skipBackward=(ImageView) v.findViewById(R.id.imageView3);
+        skipForward=(ImageView) v.findViewById(R.id.imageView4);
 
 
 
@@ -108,6 +112,19 @@ public class MusicFragment extends Fragment {
 
             }
         });
+
+        skipBackward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMediaplayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+
+                    }
+                });
+            }
+        });
+
 
         if(mMediaplayer.isPlaying()){
             mMediaplayer.pause();
