@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -40,13 +41,22 @@ public class MusicFragment extends Fragment {
     ImageView pause;
     ImageView skipForward;
     ImageView skipBackward;
-
-
+    ImageView getNextSong;
+    int songOne = 0;
+    int songTwo = 0;
+    int songThree = 0;
+    int songFour = 0;
+    int songFive = 0;
+    int songSix = 0;
+    int songSeven = 0;
+    int songNine = 0;
+    int songTen = 0;
 
 
     private MediaPlayer mMediaplayer;
 
-    public MusicFragment() {}
+    public MusicFragment() {
+    }
 
     public static MusicFragment newInstance() {
 
@@ -73,9 +83,8 @@ public class MusicFragment extends Fragment {
 
         play = (ImageView) v.findViewById(R.id.imageView1);
         pause = (ImageView) v.findViewById(R.id.imageView2);
-        skipBackward=(ImageView) v.findViewById(R.id.imageView3);
-        skipForward=(ImageView) v.findViewById(R.id.imageView4);
-
+        skipBackward = (ImageView) v.findViewById(R.id.imageView3);
+        skipForward = (ImageView) v.findViewById(R.id.imageView4);
 
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -113,28 +122,52 @@ public class MusicFragment extends Fragment {
             }
         });
 
-        skipBackward.setOnClickListener(new View.OnClickListener() {
+        play.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                if (mMediaplayer.isPlaying()) {
+                    mMediaplayer.pause();
+                    play.setVisibility(ImageView.VISIBLE);
+                    pause.setVisibility(ImageView.GONE);
+
+
+                } else {
+                    mMediaplayer.start();
+                    play.setVisibility(ImageView.GONE);
+                    pause.setVisibility(ImageView.VISIBLE);
+
+                }
+            }
+        });
+        return v;
+    }
+
+    public void getNextSong() {
+
+        skipForward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mMediaplayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
 
-                    }
-                });
+                int startTime = mMediaplayer.getCurrentPosition();
+                int forwardTime = 10000;
+                startTime += forwardTime;
+                if (startTime <= mMediaplayer.getDuration()) {
+
+                    mMediaplayer.seekTo(startTime);
+                } else {
+                    mMediaplayer.stop();
+
+                }
+
+
             }
         });
 
-
-        if(mMediaplayer.isPlaying()){
-            mMediaplayer.pause();
-        }else{
-            mMediaplayer.start();
-        }
+    } // end of getNextSong
 
 
-        return v;
-    }
+
 
 
 
@@ -193,4 +226,22 @@ public class MusicFragment extends Fragment {
 
         return randomNum;
     }
+
+
+    /*foward button listener and onclick
+    songTwo = songOne
+
+    songOne=give new value
+    attach media player to songOn
+    play song one
+
+
+    */
+    /*backbutton listener and onclick
+
+    attach media player to songTwo
+         play song Two
+     */
+
+
 }
