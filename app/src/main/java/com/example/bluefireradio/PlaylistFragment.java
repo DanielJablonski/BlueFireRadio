@@ -11,11 +11,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PlaylistFragment extends Fragment {
 
     EditText input;
+    DatabaseReference ref;
+    String srt;
 
     public PlaylistFragment() {
         // Required empty public constructor
@@ -34,7 +47,31 @@ public class PlaylistFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v= inflater.inflate(R.layout.fragment_playlist, container, false);
+        final View v= inflater.inflate(R.layout.fragment_playlist, container, false);
+        ref = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getEmail().replace(".",",")).child("playlists");
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue().toString() != "0")
+                {
+                    TextView playlistName = (TextView) v.findViewById(R.id.playlistName);
+                    TextView numOfsongs = (TextView) v.findViewById(R.id.numOfSongs);
+
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                        playlistName.setText(snapshot.child("name").getValue().toString());
+                        numOfsongs.setText(String.valueOf(snapshot.getChildrenCount()-1) + " songs");
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.addPlaylist);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,11 +84,21 @@ public class PlaylistFragment extends Fragment {
                 input.setHint("Enter Playlist Name");
                 alert.setView(input);
 
+
                 alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         //You will get as string input data in this variable.
                         // here we convert the input to a string and show in a toast.
-                        String srt = input.getEditableText().toString();
+                        srt = input.getEditableText().toString();
+
+                        Map<String, Object> map = new HashMap<String, Object>();
+                        map.put("/" + srt + "/", toMap(srt));
+                        ref.updateChildren(map, new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+
+                            }
+                        });
                         Toast.makeText(getContext(),srt, Toast.LENGTH_LONG).show();
                     } // End of onClick(DialogInterface dialog, int whichButton)
                 }); //End of alert.setPositiveButton
@@ -63,26 +110,20 @@ public class PlaylistFragment extends Fragment {
                 }); //End of alert.setNegativeButton
                 AlertDialog alertDialog = alert.create();
                 alertDialog.show();
+
+
             }
         });
         return v;
     }
 
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        // Get the layout inflater
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
-        builder.setView(inflater.inflate(R.layout.playlist_creator, null))
-                // Add action buttons
-                .setPositiveButton("Add Playlist", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        // sign in the user ...
-                    }
-                });
-        return builder.create();
+    public Map<String, Object> toMap(String playList)
+    {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("song1", "url");
+        result.put("name", playList);
+        return result;
     }
+
+
 }
