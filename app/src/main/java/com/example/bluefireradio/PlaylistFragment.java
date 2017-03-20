@@ -53,7 +53,7 @@ public class PlaylistFragment extends Fragment {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue().toString() != "0")
+                if(! dataSnapshot.getValue().toString().equals("0"))
                 {
                     TextView playlistName = (TextView) v.findViewById(R.id.playlistName);
                     TextView numOfsongs = (TextView) v.findViewById(R.id.numOfSongs);
