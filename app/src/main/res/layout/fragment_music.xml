@@ -59,6 +59,24 @@
             android:layout_weight="0.01"
             android:src="@drawable/ic_pause_black_24dp" />
 
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:layout_margin="5dp"
+            android:layout_weight="0.01"
+            android:src="@drawable/ic_skip_next_black_24dp" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:layout_margin="5dp"
+            android:layout_weight="0.01"
+            android:src="@drawable/ic_skip_previous_black_24dp" />
+
+
+
     </LinearLayout>
 
 </LinearLayout>
