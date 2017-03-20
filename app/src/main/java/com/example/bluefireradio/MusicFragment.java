@@ -3,7 +3,6 @@ package com.example.bluefireradio;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,13 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -37,26 +32,16 @@ public class MusicFragment extends Fragment {
 
     SeekBar seekBar;
     TextView songArtist, songName;
-    ImageView play;
-    ImageView pause;
-    ImageView skipForward;
-    ImageView skipBackward;
-    ImageView getNextSong;
-    ImageView getPreviousSong;
-
+    ImageView imageViewPlayPause;
+    ImageView imageViewPrevious;
+    ImageView imageViewNext;
 
     private MediaPlayer mMediaplayer;
 
-    public MusicFragment() {
-    }
+    public MusicFragment() {}
 
     public static MusicFragment newInstance() {
-
-        Bundle args = new Bundle();
-
-        MusicFragment fragment = new MusicFragment();
-        fragment.setArguments(args);
-        return fragment;
+        return new MusicFragment();
     }
 
     @Nullable
@@ -73,10 +58,9 @@ public class MusicFragment extends Fragment {
         songName = (TextView) v.findViewById(R.id.songName);
         songArtist = (TextView) v.findViewById(R.id.songArtist);
 
-        play = (ImageView) v.findViewById(R.id.imageView1);
-        pause = (ImageView) v.findViewById(R.id.imageView2);
-        skipBackward = (ImageView) v.findViewById(R.id.imageView3);
-        skipForward = (ImageView) v.findViewById(R.id.imageView4);
+        imageViewPlayPause = (ImageView) v.findViewById(R.id.image_view_play_pause);
+        imageViewNext = (ImageView) v.findViewById(R.id.image_view_next);
+        imageViewPrevious = (ImageView) v.findViewById(R.id.image_view_previous);
 
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -97,37 +81,16 @@ public class MusicFragment extends Fragment {
             }
         });
 
-
-        play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mMediaplayer.start();
-
-            }
-        });
-
-        pause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mMediaplayer.pause();
-
-            }
-        });
-
-        play.setOnClickListener(new View.OnClickListener() {
+        imageViewPlayPause.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 if (mMediaplayer.isPlaying()) {
                     mMediaplayer.pause();
-                    play.setVisibility(ImageView.VISIBLE);
-                    pause.setVisibility(ImageView.GONE);
-
+                    imageViewPlayPause.setImageResource(R.drawable.ic_play_arrow_black_24dp);
 
                 } else {
                     mMediaplayer.start();
-                    play.setVisibility(ImageView.GONE);
-                    pause.setVisibility(ImageView.VISIBLE);
+                    imageViewPlayPause.setImageResource(R.drawable.ic_pause_black_24dp);
 
                 }
             }
@@ -137,7 +100,7 @@ public class MusicFragment extends Fragment {
 
     public void getNextSong() {
 
-        skipForward.setOnClickListener(new View.OnClickListener() {
+        imageViewPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -160,7 +123,7 @@ public class MusicFragment extends Fragment {
 
     public void getPreviousSong(){
 
-        skipBackward.setOnClickListener(new View.OnClickListener() {
+        imageViewNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -246,14 +209,14 @@ public class MusicFragment extends Fragment {
 
     songOne=give new value
     attach media player to songOn
-    play song one
+    imageViewPlayPause song one
 
 
     */
     /*backbutton listener and onclick
 
     attach media player to songTwo
-         play song Two
+         imageViewPlayPause song Two
      */
 
 
