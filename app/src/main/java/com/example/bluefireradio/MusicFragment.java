@@ -95,29 +95,29 @@ public class MusicFragment extends Fragment {
                 }
             }
         });
+
+        imageViewPrevious.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPreviousSong();
+            }
+        });
+
+        imageViewNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getNextSong();
+            }
+        });
+
         return v;
     }
 
     public void getNextSong() {
 
-        imageViewPrevious.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                int startTime = mMediaplayer.getCurrentPosition();
-                int forwardTime = 10000;
-                startTime += forwardTime;
-                if (startTime <= mMediaplayer.getDuration()) {
-
-                    mMediaplayer.seekTo(startTime);
-                } else {
-                    mMediaplayer.stop();
-
-                }
-
-
-            }
-        });
+        fetchAudioUrlFromFirebase();
+        mMediaplayer.stop();
+        mMediaplayer.start();
 
     } // end of getNextSong
 
@@ -141,11 +141,6 @@ public class MusicFragment extends Fragment {
             }
         });
     }
-
-
-
-
-
 
 
 
