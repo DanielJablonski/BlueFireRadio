@@ -42,15 +42,7 @@ public class MusicFragment extends Fragment {
     ImageView skipForward;
     ImageView skipBackward;
     ImageView getNextSong;
-    int songOne = 0;
-    int songTwo = 0;
-    int songThree = 0;
-    int songFour = 0;
-    int songFive = 0;
-    int songSix = 0;
-    int songSeven = 0;
-    int songNine = 0;
-    int songTen = 0;
+    ImageView getPreviousSong;
 
 
     private MediaPlayer mMediaplayer;
@@ -165,6 +157,27 @@ public class MusicFragment extends Fragment {
         });
 
     } // end of getNextSong
+
+    public void getPreviousSong(){
+
+        skipBackward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int startTime = mMediaplayer.getCurrentPosition();
+                int previousTime = 10000;
+                startTime -= previousTime;
+
+                if(startTime >= 0){
+                    mMediaplayer.seekTo(startTime);
+                }
+                else{
+                    mMediaplayer.seekTo(0);
+                    mMediaplayer.start();
+                }
+            }
+        });
+    }
 
 
 
