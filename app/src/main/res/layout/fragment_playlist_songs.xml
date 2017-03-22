@@ -5,42 +5,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:id="@+id/playlistCardview"
-        app:cardBackgroundColor="@android:color/holo_blue_dark"
-        app:cardCornerRadius="3dp">
+        android:layout_marginStart="16dp"
+        android:id="@+id/linearLayout"
+        android:layout_marginEnd="16dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="vertical">
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="#ffffff"
+            android:spinnerMode="dropdown"
+            android:id="@+id/spinner">
+
+
+        </Spinner>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/buttonshape"
+            android:text="Add Song"
+            android:textColor="#ffffff"
+            android:layout_gravity="end"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:id="@+id/addSong"
+            android:textSize="12sp"/>
+
 
             <TextView
                 android:id="@+id/playlistName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:text="Playlist Name"
+                android:text="Song Name"
                 android:textColor="#ffffff"
                 android:textSize="25sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
                 android:textSize="15sp"
-                android:text="# of Songs"
+                android:text="Artist"
                 android:id="@+id/numOfSongs"
                 android:textColor="#e1e1e1"/>
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addPlaylist"
@@ -52,6 +65,6 @@
         android:layout_marginBottom="30dp"
         android:layout_marginEnd="30dp"
         android:background="#ffffff"
-        android:src="@drawable/ic_playlist_add_black_24dp"
+        android:src="@drawable/ic_add_white_24dp"
         app:backgroundTint="@android:color/holo_blue_dark" />
 </RelativeLayout>
