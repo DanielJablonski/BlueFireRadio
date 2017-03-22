@@ -36,7 +36,7 @@ public class MusicFragment extends Fragment {
     ImageView imageViewPrevious;
     ImageView imageViewNext;
 
-    private MediaPlayer mMediaplayer;
+    private MediaPlayer mMediaPlayer;
 
     public MusicFragment() {}
 
@@ -49,9 +49,9 @@ public class MusicFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_music, container, false);
 
-        mMediaplayer = new MediaPlayer();
-        mMediaplayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        fetchAudioUrlFromFirebase();
+        mMediaPlayer = new MediaPlayer();
+        mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        fetchAndPlayNextSong();
 
         seekBar = (SeekBar) v.findViewById(R.id.musicProgressBar);
 
@@ -65,9 +65,8 @@ public class MusicFragment extends Fragment {
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                mMediaplayer.seekTo(i);
-
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mMediaPlayer.seekTo(progress);
             }
 
             @Override
@@ -84,75 +83,68 @@ public class MusicFragment extends Fragment {
         imageViewPlayPause.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                if (mMediaplayer.isPlaying()) {
-                    mMediaplayer.pause();
+                if (mMediaPlayer.isPlaying()) {
+                    mMediaPlayer.pause();
                     imageViewPlayPause.setImageResource(R.drawable.ic_play_arrow_black_24dp);
 
                 } else {
-                    mMediaplayer.start();
+                    mMediaPlayer.start();
                     imageViewPlayPause.setImageResource(R.drawable.ic_pause_black_24dp);
 
                 }
             }
         });
 
-        imageViewPrevious.setOnClickListener(new View.OnClickListener() {
+        /*imageViewPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getPreviousSong();
             }
-        });
+        });*/
 
         imageViewNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getNextSong();
+                fetchAndPlayNextSong();
             }
         });
 
         return v;
     }
 
-    public void getNextSong() {
-
-        fetchAudioUrlFromFirebase();
-        mMediaplayer.stop();
-        mMediaplayer.start();
-
-    } // end of getNextSong
-
-    public void getPreviousSong(){
+    /*public void getPreviousSong(){
 
         imageViewNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                int startTime = mMediaplayer.getCurrentPosition();
+                int startTime = mMediaPlayer.getCurrentPosition();
                 int previousTime = 10000;
                 startTime -= previousTime;
 
                 if(startTime >= 0){
-                    mMediaplayer.seekTo(startTime);
+                    mMediaPlayer.seekTo(startTime);
                 }
                 else{
-                    mMediaplayer.seekTo(0);
-                    mMediaplayer.start();
+                    mMediaPlayer.seekTo(0);
+                    seekBar.setMax(mMediaPlayer.getDuration());
+                    mMediaPlayer.start();
                 }
             }
         });
-    }
+    }*/
 
 
 
 
-    private void fetchAudioUrlFromFirebase() {
+    private void fetchAndPlayNextSong() {
         final FirebaseStorage storage = FirebaseStorage.getInstance();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("music");
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                DataSnapshot snapshot =dataSnapshot.child(String.valueOf(randomInt(0,9)));
+                DataSnapshot snapshot = dataSnapshot.child(String.valueOf(randomInt(0,9)));
                 StorageReference storageRef = storage.getReferenceFromUrl(snapshot.child("url").getValue().toString());
                 songName.setText(snapshot.child("name").getValue().toString());
                 songArtist.setText(snapshot.child("artist").getValue().toString());
@@ -161,11 +153,12 @@ public class MusicFragment extends Fragment {
                     public void onSuccess(Uri uri) {
                         try {
                             // Download url of file
-                            final String url = uri.toString();
-                            mMediaplayer.setDataSource(url);
+                            String songUrl = uri.toString();
+                            mMediaPlayer.setDataSource(songUrl);
                             // wait for media player to get prepare
-                            mMediaplayer.prepare();
-                            mMediaplayer.start();
+                            mMediaPlayer.prepare();
+                            seekBar.setMax(mMediaPlayer.getDuration());
+                            mMediaPlayer.start();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -185,9 +178,6 @@ public class MusicFragment extends Fragment {
 
             }
         });
-// Create a storage reference from our app
-
-
     }
 
     public static int randomInt(int min, int max) {
