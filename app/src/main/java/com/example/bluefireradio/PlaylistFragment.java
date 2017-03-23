@@ -27,6 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.R.attr.fragment;
+
 public class PlaylistFragment extends Fragment {
 
     EditText input;
@@ -34,6 +36,8 @@ public class PlaylistFragment extends Fragment {
     String srt;
     CardView playlist;
     FragmentTransaction fragmentTransaction;
+    Fragment fragment = new Fragment();
+    Bundle bundle = new Bundle();
 
     public PlaylistFragment() {
         // Required empty public constructor
@@ -65,11 +69,14 @@ public class PlaylistFragment extends Fragment {
                     TextView numOfsongs = (TextView) v.findViewById(R.id.numOfSongs);
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-
-                        playlistName.setText(snapshot.child("name").getValue().toString());
+                        String playlistNameString = snapshot.child("name").getValue().toString();
+                        playlistName.setText(playlistNameString);
                         numOfsongs.setText(String.valueOf(snapshot.getChildrenCount()-1) + " songs");
+
+                        ((MainActivity)getActivity()).savePlaylist(playlistNameString);
                     }
                 }
+
             }
 
             @Override

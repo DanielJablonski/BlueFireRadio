@@ -2,6 +2,7 @@ package com.example.bluefireradio;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -38,6 +39,7 @@ public class PlaylistSongs extends Fragment {
     long counter;
     Spinner dropdown;
     Button addSong;
+    String selectedPlaylist;
 
     public PlaylistSongs() {
         // Required empty public constructor
@@ -53,21 +55,29 @@ public class PlaylistSongs extends Fragment {
                              Bundle savedInstanceState) {
 
         final View v = inflater.inflate(R.layout.fragment_playlist_songs, container, false);
-
+        selectedPlaylist = ((MainActivity)getActivity()).getPlaylistName();
         final LinearLayout linearLayout = (LinearLayout) v.findViewById(R.id.linearLayout);
         ref = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getEmail().replace(".",",")).child("playlists");
         dropdown = (Spinner) v.findViewById(R.id.spinner);
         addSong = (Button) v.findViewById(R.id.addSong);
+        final long i = 1;
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if(snapshot.child("name").getValue().toString().equals("Songs"))
+                        break;
 
                     TextView textView = new TextView(getContext());
-                    textView.setText(snapshot.child("name").getValue().toString());
+                    textView.setText(snapshot.child(selectedPlaylist).child("name").getValue().toString());
+                    textView.setTextColor(Color.WHITE);
+                    textView.setTextSize(20);
+                    textView.setPadding(0,0,0,20);
                     linearLayout.addView(textView);
-                    counter = snapshot.getChildrenCount();
+                    counter = snapshot.getChildrenCount()-1;
+
+
                 }
             }
 
@@ -97,16 +107,23 @@ public class PlaylistSongs extends Fragment {
                         String text = dropdown.getSelectedItem().toString();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren())
                         {
-
+                            if(snapshot.child("name").getValue().toString().equals(text))
+                            {
+                                String name =snapshot.child("name").getValue().toString();
+                                String artist = snapshot.child("artist").getValue().toString();
+                                String url = snapshot.child("url").getValue().toString();
+                                map.put("/" + selectedPlaylist + "/"+ counter + "/", mapSongs(name, artist, url));
+                                ref.updateChildren(map, new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                        Toast.makeText(getContext(), "The song has been added", Toast.LENGTH_SHORT).show();
+                                        counter++;
+                                    }
+                                });
+                            }
                         }
 
-//                        map.put("/" + counter + "/", mapSongs());
-//                        ref.updateChildren(map, new DatabaseReference.CompletionListener() {
-//                            @Override
-//                            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-//
-//                            }
-//                        });
+
                     }
                 });
             }

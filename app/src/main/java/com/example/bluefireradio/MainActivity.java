@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FirebaseUser user;
 
     FragmentTransaction fragmentTransaction;
+    String playlistName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,5 +114,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void savePlaylist(String name)
+    {
+        playlistName = name;
+    }
+
+    public String getPlaylistName()
+    {
+        return playlistName;
     }
 }
