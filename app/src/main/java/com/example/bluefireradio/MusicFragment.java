@@ -38,6 +38,10 @@ public class MusicFragment extends Fragment {
 
     private MediaPlayer mMediaPlayer;
 
+    int lastSongNumber;
+    int currentSongNumber;
+    boolean hasGottenFirstSong;
+
     public MusicFragment() {}
 
     public static MusicFragment newInstance() {
@@ -51,7 +55,7 @@ public class MusicFragment extends Fragment {
 
         mMediaPlayer = new MediaPlayer();
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        fetchAndPlayNextSong();
+        fetchAndPlaySong(false);
 
         seekBar = (SeekBar) v.findViewById(R.id.musicProgressBar);
 
@@ -66,7 +70,8 @@ public class MusicFragment extends Fragment {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mMediaPlayer.seekTo(progress);
+                if (fromUser)
+                    mMediaPlayer.seekTo(progress);
             }
 
             @Override
@@ -95,17 +100,17 @@ public class MusicFragment extends Fragment {
             }
         });
 
-        /*imageViewPrevious.setOnClickListener(new View.OnClickListener() {
+        imageViewPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getPreviousSong();
+                fetchAndPlaySong(false);
             }
-        });*/
+        });
 
         imageViewNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fetchAndPlayNextSong();
+                fetchAndPlaySong(true);
             }
         });
 
@@ -136,15 +141,26 @@ public class MusicFragment extends Fragment {
 
 
 
-
-    private void fetchAndPlayNextSong() {
+    // If true, play next song, else play previous song
+    private void fetchAndPlaySong(final boolean shouldPlayNextSong) {
         final FirebaseStorage storage = FirebaseStorage.getInstance();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("music");
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                DataSnapshot snapshot = dataSnapshot.child(String.valueOf(randomInt(0,9)));
+                DataSnapshot snapshot;
+                if (hasGottenFirstSong) {
+                    if (shouldPlayNextSong) {
+                        lastSongNumber = currentSongNumber;
+                        currentSongNumber = randomInt(0, 9);
+                    } else {
+                        currentSongNumber = lastSongNumber;
+                    }
+                } else {
+                    currentSongNumber = randomInt(0, 9);
+                }
+                snapshot = dataSnapshot.child(String.valueOf(currentSongNumber));
                 StorageReference storageRef = storage.getReferenceFromUrl(snapshot.child("url").getValue().toString());
                 songName.setText(snapshot.child("name").getValue().toString());
                 songArtist.setText(snapshot.child("artist").getValue().toString());
@@ -154,6 +170,13 @@ public class MusicFragment extends Fragment {
                         try {
                             // Download url of file
                             String songUrl = uri.toString();
+                            if (mMediaPlayer.isPlaying()) {
+                                mMediaPlayer.stop();
+                                mMediaPlayer.release();
+                                seekBar.setProgress(0);
+                                mMediaPlayer = new MediaPlayer();
+                                mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                            }
                             mMediaPlayer.setDataSource(songUrl);
                             // wait for media player to get prepare
                             mMediaPlayer.prepare();
